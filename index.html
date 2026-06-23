@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alexander & Chantane — 27 August 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #070d1c;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #10193a;
+      border: 1px solid #2a1f3d;
+      border-radius: 4px;
+      max-width: 460px;
+      width: 100%;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .ornament {
+      color: #7b2442;
+      font-size: 18px;
+      letter-spacing: 10px;
+      display: block;
+      margin-bottom: 1.5rem;
+      font-family: sans-serif;
+    }
+
+    .eyebrow {
+      font-family: sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8a9bc4;
+      margin-bottom: 1.5rem;
+    }
+
+    .names {
+      font-size: 42px;
+      font-weight: 400;
+      font-style: italic;
+      color: #e8d9c0;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .ampersand { color: #9b2d52; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: #2a1f3d; }
+    .divider-diamond {
+      width: 6px; height: 6px;
+      background: #7b2442;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .date {
+      font-size: 16px;
+      color: #c4b49a;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.3rem;
+    }
+
+    .location {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #6a7fa8;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+    }
+
+    .body-text {
+      font-size: 17px;
+      font-style: italic;
+      color: #b0a08a;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .rsvp-label {
+      font-family: sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6a7fa8;
+      margin-bottom: 1rem;
+    }
+
+    .rsvp-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-yes {
+      background: #7b2442;
+      border: 1px solid #9b2d52;
+      color: #f0d9c8;
+      padding: 11px 28px;
+      font-family: sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+    .btn-yes:hover { background: #9b2d52; }
+
+    .btn-no {
+      background: transparent;
+      border: 1px solid #2a3a5c;
+      color: #6a7fa8;
+      padding: 11px 28px;
+      font-family: sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .btn-no:hover { border-color: #4a5f8a; color: #8a9bc4; }
+
+    .deadline {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #3a4a68;
+      margin-top: 0.5rem;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .name-input {
+      flex: 1;
+      background: #0d1428;
+      border: 1px solid #2a3a5c;
+      color: #c4b49a;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: 'Cormorant Garamond', serif;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .name-input:focus { border-color: #7b2442; }
+    .name-input::placeholder { color: #3a4a68; }
+
+    .submit-btn {
+      width: 100%;
+      background: #7b2442;
+      border: 1px solid #9b2d52;
+      color: #f0d9c8;
+      padding: 12px;
+      font-family: sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: #9b2d52; }
+    .submit-btn:disabled { background: #3a1a2a; border-color: #3a1a2a; color: #5a3a4a; cursor: not-allowed; }
+
+    .response-title {
+      font-size: 28px;
+      font-style: italic;
+      color: #e8d9c0;
+      margin-bottom: 0.75rem;
+    }
+
+    .response-msg {
+      font-size: 16px;
+      font-style: italic;
+      color: #b0a08a;
+      line-height: 1.9;
+    }
+
+    .response-msg.decline { color: #6a7fa8; }
+
+    .back-link {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #3a4a68;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      display: block;
+      background: none;
+      border: none;
+    }
+    .back-link:hover { color: #6a7fa8; }
+
+    .error-msg {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #9b2d52;
+      margin-top: 0.75rem;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="ornament">— ✦ —</span>
+    <p class="eyebrow">Together with their families</p>
+    <h1 class="names">Alexander <span class="ampersand">&amp;</span> Chantane</h1>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <p class="date">Wednesday · 27 August 2025</p>
+    <p class="location">Pretoria, South Africa</p>
+    <p class="body-text">A celebration of love, shared with<br>those who matter most to us.</p>
+
+    <div id="step-rsvp">
+      <p class="rsvp-label">Kindly RSVP</p>
+      <div class="rsvp-btns">
+        <button class="btn-yes" onclick="showForm('yes')">Joyfully accept</button>
+        <button class="btn-no" onclick="showForm('no')">Regretfully decline</button>
+      </div>
+      <p class="deadline">Kindly respond by 1 August 2025</p>
+    </div>
+
+    <div id="step-form" class="hidden">
+      <p class="rsvp-label" id="form-label"></p>
+      <div class="name-row">
+        <input class="name-input" id="fname" placeholder="First name" />
+        <input class="name-input" id="lname" placeholder="Last name" />
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitRsvp()">Confirm my RSVP</button>
+      <p class="error-msg hidden" id="error-msg">Something went wrong — please try again.</p>
+    </div>
+
+    <div id="step-response" class="hidden">
+      <p class="response-title" id="resp-title"></p>
+      <p class="response-msg" id="resp-msg"></p>
+      <button class="back-link" onclick="resetInvite()">Change my response</button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/rsvp';
+    let currentChoice = '';
+
+    function showForm(choice) {
+      currentChoice = choice;
+      document.getElementById('step-rsvp').classList.add('hidden');
+      document.getElementById('step-form').classList.remove('hidden');
+      document.getElementById('form-label').textContent =
+        choice === 'yes'
+          ? 'We cannot wait — your name please'
+          : 'We understand — your name please';
+      document.getElementById('fname').focus();
+    }
+
+    async function submitRsvp() {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      if (!fname) { document.getElementById('fname').focus(); return; }
+
+      const btn = document.getElementById('submit-btn');
+      const errMsg = document.getElementById('error-msg');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      errMsg.classList.add('hidden');
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: fname,
+            lastName: lname,
+            attending: currentChoice === 'yes'
+          })
+        });
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+
+        document.getElementById('step-form').classList.add('hidden');
+        document.getElementById('step-response').classList.remove('hidden');
+
+        const title = document.getElementById('resp-title');
+        const msg = document.getElementById('resp-msg');
+
+        if (currentChoice === 'yes') {
+          title.textContent = 'We are overjoyed, ' + fname + '!';
+          msg.textContent = 'Words cannot express how thrilled we are that you will be sharing this moment with us. Your presence will make our day truly complete.';
+          msg.className = 'response-msg';
+        } else {
+          title.textContent = 'Thank you, ' + fname;
+          msg.textContent = 'We will miss you dearly, but we are grateful you took the time to let us know. You will be in our hearts on the day.';
+          msg.className = 'response-msg decline';
+        }
+
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Confirm my RSVP';
+        errMsg.classList.remove('hidden');
+      }
+    }
+
+    function resetInvite() {
+      currentChoice = '';
+      document.getElementById('fname').value = '';
+      document.getElementById('lname').value = '';
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('submit-btn').textContent = 'Confirm my RSVP';
+      document.getElementById('step-response').classList.add('hidden');
+      document.getElementById('step-form').classList.add('hidden');
+      document.getElementById('step-rsvp').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
