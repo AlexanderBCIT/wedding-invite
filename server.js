@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const nodemailer = require('nodemailer');
 const cors = require('cors');
 
 const app = express();
@@ -16,19 +15,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.static('.'));
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
 app.post('/rsvp', async (req, res) => {
   const { firstName, lastName, attending } = req.body;
   const fullName = `${firstName} ${lastName}`.trim();
@@ -36,23 +22,40 @@ app.post('/rsvp', async (req, res) => {
   const emoji = attending ? '🎉' : '💌';
 
   try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
-      subject: `${emoji} Wedding RSVP — ${fullName} has ${status}`,
-      html: `
-        <div style="font-family: Georgia, serif; max-width: 500px; margin: 0 auto; padding: 2rem; background: #0f1932; color: #e8d9c0; border-radius: 8px;">
-          <h2 style="color: #c4b49a; border-bottom: 1px solid #2a1f3d; padding-bottom: 1rem;">New RSVP Received</h2>
-          <p><strong style="color: #9b2d52;">Guest:</strong> ${fullName}</p>
-          <p><strong style="color: #9b2d52;">Response:</strong> ${status}</p>
-          <p><strong style="color: #9b2d52;">Received:</strong> ${new Date().toLocaleString('en-ZA')}</p>
-        </div>
-      `
+    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: 'xanderbgraham@gmail.com' }] }],
+        from: { email: 'xanderbgraham@gmail.com', name: 'Alexander & Chantane' },
+        subject: `${emoji} Wedding RSVP — ${fullName} has ${status}`,
+        content: [{
+          type: 'text/html',
+          value: `
+            <div style="font-family: Georgia, serif; max-width: 500px; margin: 0 auto; padding: 2rem; background: #0f1932; color: #e8d9c0; border-radius: 8px;">
+              <h2 style="color: #c4b49a; border-bottom: 1px solid #2a1f3d; padding-bottom: 1rem;">New RSVP Received</h2>
+              <p><strong style="color: #9b2d52;">Guest:</strong> ${fullName}</p>
+              <p><strong style="color: #9b2d52;">Response:</strong> ${status}</p>
+              <p><strong style="color: #9b2d52;">Received:</strong> ${new Date().toLocaleString('en-ZA')}</p>
+            </div>
+          `
+        }]
+      })
     });
 
-    res.json({ success: true });
+    if (response.ok) {
+      res.json({ success: true });
+    } else {
+      const error = await response.json();
+      console.error('SendGrid error:', error);
+      res.status(500).json({ success: false, error: JSON.stringify(error) });
+    }
+
   } catch (err) {
-    console.error('Email error:', err);
+    console.error('Server error:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
