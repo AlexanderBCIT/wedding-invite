@@ -224,6 +224,34 @@
     }
 
     .hidden { display: none; }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.25rem;
+      }
+
+      .names {
+        font-size: 30px;
+      }
+
+      .rsvp-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-yes, .btn-no {
+        width: 100%;
+        text-align: center;
+      }
+
+      .name-row {
+        flex-direction: column;
+      }
+
+      .name-input {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -269,7 +297,7 @@
   </div>
 
   <script>
-    const API_URL = ' https://wedding-invite-api-8d92.onrender.com';
+    const API_URL = 'https://wedding-invite-api-8d92.onrender.com/rsvp';
     let currentChoice = '';
 
     function showForm(choice) {
